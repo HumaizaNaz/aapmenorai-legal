@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TikTok Auth — AapMeinOrAI</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; text-align: center; }
+  .code-box { background: #f0f0f0; border: 2px solid #333; padding: 20px; font-size: 18px; font-family: monospace; word-break: break-all; margin: 20px 0; border-radius: 8px; }
+  button { background: #000; color: #fff; padding: 12px 30px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+  button:hover { background: #333; }
+  .success { color: green; font-weight: bold; }
+</style>
+</head>
+<body>
+<h2>TikTok Auth — AapMeinOrAI</h2>
+<div id="content">Loading...</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  const error = params.get('error');
+  const div = document.getElementById('content');
+
+  if (code) {
+    div.innerHTML = `
+      <p class="success">Auth successful!</p>
+      <p>Yeh code copy karo aur terminal mein paste karo:</p>
+      <div class="code-box" id="code">${code}</div>
+      <button onclick="navigator.clipboard.writeText('${code}').then(()=>this.textContent='Copied!')">Copy Code</button>
+    `;
+  } else if (error) {
+    div.innerHTML = `<p style="color:red">Error: ${error} — ${params.get('error_description') || ''}</p>`;
+  } else {
+    div.innerHTML = '<p>No auth code found in URL.</p>';
+  }
+</script>
+</body>
+</html>
